@@ -2,7 +2,7 @@ export function configureFakeBackend () {
   let users = [
     {
       id: 1,
-      username: 'endritkane',
+      username: 'tpdov.kpr@gmail.com',
       password: 'Password@1',
       firstName: 'Endrit',
       lastName: 'Kane',

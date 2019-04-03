@@ -2,7 +2,13 @@
   <div class="form text-md-center" v-bind:class="{'error-form': loginFail}">
     <div>
       <h1 class="text-sm-left">Log In</h1>
-      <form @submit.prevent="handleSubmit">
+      <p
+        v-if="loginStatus.error"
+        class="text-md-left error mt-3"
+      >
+        {{loginStatus.message}}
+      </p>
+      <form @submit.prevent="handleSubmit" novalidate>
         <div class="form-group">
           <v-text-field
             v-model="username"
@@ -18,8 +24,8 @@
             :rules="passwordRules"
             ref="passwordField"
           ></v-text-field>
-          <div>
-            <v-btn large class="submit">LOG IN</v-btn>
+          <div class="mt-3">
+            <v-btn type="submit" large class="submit">LOG IN</v-btn>
           </div>
           <v-flex xs6 class="footer mt-3">
             <router-link to="/forgot-password" class="link">Forgot Password</router-link>
@@ -31,7 +37,7 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'Login',
 
@@ -41,13 +47,20 @@ export default {
       password: null,
       loginFail: false,
       usernameRules: [
-        (v) => !!v || 'E-mail is required'
+        (v) => !!v || 'E-mail is required',
+        (v) => /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm.test(v) || 'E-mail must be valid'
       ],
       passwordRules: [
         (v) => !!v || 'Password is required',
         (v) => /\S{8,}/igm.test(v) || 'At least 8 characters'
       ]
     }
+  },
+
+  computed: {
+    ...mapGetters({
+      loginStatus: 'auth/loginStatus'
+    })
   },
 
   methods: {
@@ -70,6 +83,11 @@ export default {
   .form {
     max-width: 500px;
     margin: 0 auto;
+
+    .error {
+      color: red;
+      font-size: 1.5rem;
+    }
 
     .submit {
       display: block;

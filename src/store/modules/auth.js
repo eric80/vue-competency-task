@@ -3,14 +3,17 @@ import router from '@/router'
 
 const user = JSON.parse(localStorage.getItem('user'))
 const initialState = user
-  ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null, message: '' }
+  ? { status: { loggedIn: true }, error: false, user }
+  : { status: { loggedIn: false }, user: null, error: true, message: '' }
 
 const authentication = {
   namespaced: true,
   state: initialState,
 
   getters: {
+    loginStatus (state) {
+      return state
+    }
   },
 
   actions: {
@@ -46,6 +49,8 @@ const authentication = {
     loginFailure (state, msg) {
       state.message = msg
       state.user = null
+      state.error = true
+      console.log(state)
     },
     logout (state) {
       state.status = {}
