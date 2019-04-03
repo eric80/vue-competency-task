@@ -1,29 +1,28 @@
 <template>
-  <div class="form" v-bind:class="{'error-form': loginFail}">
+  <div class="form text-md-center" v-bind:class="{'error-form': loginFail}">
     <div>
+      <h1 class="text-sm-left">Log In</h1>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <text-field
+          <v-text-field
             v-model="username"
-            placeholder="username"
-            class="mb-2"
+            label="Email"
+            required
             :rules="usernameRules"
             ref="usernameField"
-          ></text-field>
-
-          <text-field
-            :type="'password'"
+          ></v-text-field>
+          <v-text-field
+            type="password"
+            label="Password"
             v-model="password"
-            placeholder="password"
-            class="mb-2"
             :rules="passwordRules"
             ref="passwordField"
-          ></text-field>
-          <div class="signin">
-            <button class="submit-btn">LOG IN</button>
+          ></v-text-field>
+          <div>
+            <v-btn large class="submit">LOG IN</v-btn>
           </div>
-          <v-flex xs6 offset-xs3 class="footer">
-            <router-link to="/forgot-password" class="link">forgot password</router-link>
+          <v-flex xs6 class="footer mt-3">
+            <router-link to="/forgot-password" class="link">Forgot Password</router-link>
           </v-flex>
         </div>
       </form>
@@ -32,14 +31,9 @@
 </template>
 
 <script>
-import TextField from '../../components/TextField'
 
 export default {
   name: 'Login',
-
-  components: {
-    TextField
-  },
 
   data () {
     return {
@@ -72,3 +66,26 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  .form {
+    max-width: 500px;
+    margin: 0 auto;
+
+    .submit {
+      display: block;
+      margin-left: 0;
+      margin-right: auto;
+      background-color: #2096f3 !important;
+      color: white;
+    }
+
+    .footer {
+      text-align: left;
+
+      a {
+        color: black;
+        text-decoration: none;
+      }
+    }
+  }
+</style>
