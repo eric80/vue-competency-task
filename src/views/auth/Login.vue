@@ -3,10 +3,10 @@
     <div>
       <h1 class="text-sm-left">Log In</h1>
       <p
-        v-if="loginStatus.error"
+        v-if="status.error"
         class="text-md-left error mt-3"
       >
-        {{loginStatus.message}}
+        {{status.message}}
       </p>
       <form @submit.prevent="handleSubmit" novalidate>
         <div class="form-group">
@@ -59,7 +59,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      loginStatus: 'auth/loginStatus'
+      status: 'auth/getStatus'
     })
   },
 

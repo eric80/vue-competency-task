@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import HomePage from './views/Home'
+import AdminPage from './views/Admin'
+import UserPage from './views/User'
 import LoginPage from './views/auth/Login'
 
 Vue.use(Router)
@@ -11,7 +12,11 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: HomePage
+      component: AdminPage
+    },
+    {
+      path: '/user',
+      component: UserPage
     },
     {
       path: '/login',

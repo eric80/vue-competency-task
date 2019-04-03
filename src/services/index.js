@@ -18,7 +18,13 @@ function login (username, password) {
     .then((user) => {
       // login successful if there's a jwt token in the response
       if (user.token) {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        const base64Url = user.token.split('.')[1]
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+        const payload = JSON.parse(window.atob(base64))
+        console.log(payload)
+        user['role'] = payload.role
+        user['isLoggedIn'] = true
+
         localStorage.setItem('user', JSON.stringify(user))
       }
 

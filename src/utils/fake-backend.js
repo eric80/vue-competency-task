@@ -8,7 +8,19 @@ export function configureFakeBackend () {
       lastName: 'Kane',
       gender: 'M',
       test: 'GD',
-      status: 'Pending'
+      status: 'Pending',
+      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFbmRyaXQgS2FuZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1Mzg3MTM1OCwiZXhwIjoxNTU0MzIwODEwLCJqdGkiOiJlZTM5ODc2NS1hMzFmLTRhNDEtYWYzMC1mOWEyYzE1OGE0NzgifQ.2bWGDxPk0wd6ZETMXAEWYYHhg26kAkJFg-jHY29oFoE'
+    },
+    {
+      id: 2,
+      username: 'test@gmail.com',
+      password: 'A12345678',
+      firstName: 'Demo',
+      lastName: 'User',
+      gender: 'M',
+      test: 'GD',
+      status: 'Pending',
+      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJFbmRyaXQgS2FuZSIsInJvbGUiOiJub25hZG1pbiIsImlhdCI6MTU1Mzg3MTM1OCwiZXhwIjoxNTU0MzIwODI4LCJqdGkiOiI1NDNmNzMzYi03YTQ5LTRkYTctYWI1MC1kMDA3ZGFjN2ZmMmIifQ.AWBinnIZ4nRTzRRnMA3wmTANZCQEjFa4_7Y9xqxBWiE'
     }
   ]
 
@@ -29,12 +41,13 @@ export function configureFakeBackend () {
           if (filteredUsers.length) {
             // if login details are valid return user details and fake jwt token
             let user = filteredUsers[0]
+
             let responseJson = {
               id: user.id,
               username: user.username,
               firstName: user.firstName,
               lastName: user.lastName,
-              token: 'fake-jwt-token'
+              token: user.token
             }
             resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(responseJson)) })
           } else {

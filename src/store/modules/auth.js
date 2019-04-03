@@ -1,30 +1,42 @@
 import { userService } from '../../services'
 import router from '@/router'
 
-const user = JSON.parse(localStorage.getItem('user'))
-const initialState = user
-  ? { status: { loggedIn: true }, error: false, user }
-  : { status: { loggedIn: false }, user: null, error: true, message: '' }
+const initialState = {
+  user: {},
+  loggedIn: false,
+  status: {
+    error: false,
+    message: ''
+  }
+}
 
 const authentication = {
   namespaced: true,
   state: initialState,
 
   getters: {
-    loginStatus (state) {
-      return state
+    getUser (state) {
+      return JSON.parse(localStorage.getItem('user'))
+    },
+    isLoggedIn (state) {
+      return state.loggedIn
+    },
+    getStatus (state) {
+      return state.status
     }
   },
 
   actions: {
     login ({ dispatch, commit }, { username, password }) {
-      commit('loginRequest', { username })
-
       userService.login(username, password)
         .then(
           (user) => {
             commit('loginSuccess', user)
-            router.push('/')
+            if (user.role === 'admin') {
+              router.push('/')
+            } else {
+              router.push('/user')
+            }
           },
           (error) => {
             commit('loginFailure', error.message)
@@ -38,23 +50,20 @@ const authentication = {
   },
 
   mutations: {
-    loginRequest (state, user) {
-      state.status = { loggingIn: true }
-      state.user = user
-    },
     loginSuccess (state, user) {
-      state.status = { loggedIn: true }
       state.user = user
+      state.loggedIn = true
+      state.status.error = false
     },
     loginFailure (state, msg) {
-      state.message = msg
+      state.status.message = msg
       state.user = null
-      state.error = true
-      console.log(state)
+      state.status.error = true
     },
     logout (state) {
-      state.status = {}
+      state.loggedIn = false
       state.user = null
+      localStorage.removeItem('user')
     }
   }
 }
