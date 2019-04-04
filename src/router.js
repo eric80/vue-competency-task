@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import AdminPage from './views/Admin'
+import AdminPage from './views/Home'
 import UserPage from './views/User'
 import LoginPage from './views/auth/Login'
 

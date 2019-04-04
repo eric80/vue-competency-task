@@ -32,11 +32,7 @@ const authentication = {
         .then(
           (user) => {
             commit('loginSuccess', user)
-            if (user.role === 'admin') {
-              router.push('/')
-            } else {
-              router.push('/user')
-            }
+            router.push('/')
           },
           (error) => {
             commit('loginFailure', error.message)
