@@ -80,7 +80,7 @@ export default {
       },
       {
         text: 'Status',
-        value: 'protein',
+        value: 'status',
         align: 'center'
       }
     ],
